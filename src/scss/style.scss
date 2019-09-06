@@ -1,33 +1,10 @@
-@font-face {
-  font-family: "GTEestiProText";
-  src: url("../../fonts/GT-Eesti-Pro-Text-Bold.OTF") format("opentype");
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: "GTEestiProText";
-  src: url("../../fonts/GT-Eesti-Pro-Text-Regular.OTF") format("opentype");
-  font-weight: 500;
-}
-
-body {
-  font-family: 'GTEestiProText', Arial, sans-serif;
-}
-
-button {
-  outline: transparent;
-
-  &:focus {
-    outline: transparent;
-  }
-}
+@import "base";
 
 .btn {
   display: inline-flex;
   width: auto;
   align-items: center;
   justify-content: center;
-  min-height: 27px;
   line-height: 1.17;
   position: relative;
   box-sizing: border-box;
@@ -37,7 +14,6 @@ button {
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  border: 1px solid transparent;
   border-radius: 2px;
   transition: all .08s ease-in-out;
   user-select: none;

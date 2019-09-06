@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "GTEestiProText";
+  src: url("../fonts/GT-Eesti-Pro-Text-Bold.OTF") format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "GTEestiProText";
+  src: url("../fonts/GT-Eesti-Pro-Text-Regular.OTF") format("opentype");
+  font-weight: 500;
+}
+
+body {
+  font-family: 'GTEestiProText', Arial, sans-serif;
+}
+
+button {
+  outline: transparent;
+
+  &:focus {
+    outline: transparent;
+  }
+}
