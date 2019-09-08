@@ -1,4 +1,5 @@
 "use strict";
+let selectedCategory;
 
 function toggleCheckbox() {
 	const checkboxes = document.querySelectorAll(".filter-check_checkbox");
@@ -37,7 +38,7 @@ function toggleCard() {
 	const cartEmpty = document.getElementById("cart-empty");
 	const cartCount = document.querySelector(".counter");
 
-	cards.forEach( card => {
+	cards.forEach(card => {
 		const btn = card.querySelector("button");
 
 		btn.addEventListener("click", () => {
@@ -62,7 +63,7 @@ function toggleCard() {
 		let sum = 0;
 
 		cartCount.textContent = cardsCart.length;
-		cardPrices.forEach( el => {
+		cardPrices.forEach(el => {
 			const price = parseFloat(el.textContent);
 
 			sum += price;
@@ -84,21 +85,6 @@ function actionPage() {
 	const search = document.querySelector(".search-wrapper_input");
 	const searchBtn = document.querySelector(".search-btn");
 
-	function filter() {
-		cards.forEach(card => {
-			const cardPrice = card.querySelector(".card-price");
-			const price = parseFloat(cardPrice.textContent);
-			const discount = card.querySelector(".card-sale");
-
-			card.parentNode.style.display = "";
-			if ((min.value && price <= min.value) || (max.value && price >= max.value)) {
-				card.parentNode.style.display = "none";
-			} else if (discountCheckbox.checked && !discount) {
-				card.parentNode.style.display = "none";
-			}
-		});
-	}
-
 	discountCheckbox.addEventListener("change", filter);
 	min.addEventListener("change", filter);
 	max.addEventListener("change", filter);
@@ -113,6 +99,29 @@ function actionPage() {
 				card.parentNode.style.display = "none";
 			}
 		});
+	});
+}
+
+function filter() {
+	const cards = document.querySelectorAll(".goods .card");
+	const discountCheckbox = document.getElementById("discount-checkbox");
+	const min = document.getElementById("min");
+	const max = document.getElementById("max");
+
+	cards.forEach(card => {
+		const cardPrice = card.querySelector(".card-price");
+		const price = parseFloat(cardPrice.textContent);
+		const discount = card.querySelector(".card-sale");
+		const category = card.dataset.category;
+
+		card.parentNode.style.display = "";
+		if ((min.value && price <= min.value) || (max.value && price >= max.value)) {
+			card.parentNode.style.display = "none";
+		} else if (discountCheckbox.checked && !discount) {
+			card.parentNode.style.display = "none";
+		} else if (selectedCategory && selectedCategory !== category) {
+			card.parentNode.style.display = "none";
+		}
 	});
 }
 
@@ -137,7 +146,7 @@ function renderCards(data) {
 	data.goods.forEach(item => {
 		const card = document.createElement("div");
 		card.className = "col-12 col-md-6 col-lg-4 col-xl-3";
-		card.innerHTML = `<div class="card">
+		card.innerHTML = `<div class="card" data-category="${item.category}">
 								${item.sale ? '<div class="card-sale">🔥Hot Sale🔥</div>' : ''} 
                                 <div class="card-img-wrapper">
 										<span class="card-img-top"
@@ -154,8 +163,50 @@ function renderCards(data) {
 	});
 }
 
+function renderCatalog() {
+	const cards = document.querySelectorAll(".goods .card");
+	const categories = new Set();
+	const catalog = document.querySelector(".catalog");
+	const catalogList = document.querySelector(".catalog-list");
+	const catalogBtn = document.querySelector(".catalog-button");
+
+	cards.forEach(card => {
+		categories.add(card.dataset.category);
+	});
+
+	categories.forEach(category => {
+		const li = document.createElement("li");
+
+		li.textContent = category;
+		catalogList.appendChild(li);
+	});
+
+	catalogBtn.addEventListener("click", (event) => {
+		if (catalog.style.display) {
+			catalog.style.display = "";
+		} else {
+			catalog.style.display = "block";
+		}
+
+		if (event.target.tagName === "LI") {
+			cards.forEach(card => {
+				const category = card.dataset.category;
+
+				if (event.target.textContent !== category) {
+					card.parentNode.style.display = "none";
+				} else {
+					card.parentNode.style.display = "block";
+					selectedCategory = category;
+				}
+			});
+			filter();
+		}
+	})
+}
+
 getData().then(data => {
 	renderCards(data);
+	renderCatalog();
 	toggleCheckbox();
 	toggleCart();
 	toggleCard();
