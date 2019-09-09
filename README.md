@@ -1,5 +1,3 @@
-course from Glo Academy
-
 Запустить локальный сервер:
 
 npm start && browser-sync start --server --files "src/**/*.*"  
