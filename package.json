@@ -1,0 +1,24 @@
+{
+  "name": "ozonestart",
+  "version": "1.0.0",
+  "description": "course from Glo Academy",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeffasol/ozonestart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yeffasol/ozonestart/issues"
+  },
+  "homepage": "https://github.com/yeffasol/ozonestart#readme",
+  "devDependencies": {
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
+  }
+}

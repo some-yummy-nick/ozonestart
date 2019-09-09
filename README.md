@@ -1,6 +1,8 @@
+course from Glo Academy
+
 Запустить локальный сервер:
 
-browser-sync start --server --files "src/**/*.*"
+npm start && browser-sync start --server --files "src/**/*.*"  
 
 watcher for scss files in php storm 
 
